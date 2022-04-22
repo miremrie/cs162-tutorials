@@ -34,13 +34,9 @@ object Calculator {
   // Evaluates the expression to a numeric value.
   def evaluate(expr: Expr): Double = expr match {
     case Num(a) => a
-    case UnOp("-", Num(a)) => -evaluate(Num(a))
     case UnOp("-", e) => -evaluate(e)
-    case BinOp("+", Num(a), Num(b)) => a + b
-    case BinOp("-", Num(a), Num(b)) => a - b
-    case BinOp("*", Num(a), Num(b)) => a * b
-    case BinOp(op, Var("DUP"), Num(a)) => evaluate(BinOp(op, Num(a), Num(a)))
-    case BinOp(op, Num(a), Var("DUP")) => evaluate(BinOp(op, Num(a), Num(a)))
+    case BinOp(op, Var("DUP"), a) => evaluate(BinOp(op, a, a))
+    case BinOp(op, a, Var("DUP")) => evaluate(BinOp(op, a, a))
     case BinOp("+", a, b) => evaluate(a) + evaluate(b) 
     case BinOp("-", a, b) => evaluate(a) - evaluate(b) 
     case BinOp("*", a, b) => evaluate(a) * evaluate(b) 
