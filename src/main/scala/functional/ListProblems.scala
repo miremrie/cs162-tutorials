@@ -19,5 +19,11 @@ object ListProblems {
 	//  `None` if there's no such element.
 	// Examples: (1, 2, 3) -- penultimate --> 2
 	// Hint: List.foldLeft can be useful here.
-	def safePenultimate(list: List[Int]): Option[Int] = list.lift(list.length - 2) 
+    def safePenultimate(list: List[Int]): Option[Int] =
+    list.zipWithIndex.foldLeft(Option.empty[Int])
+    {
+        case (agr, x) =>
+            if (x._2 == list.length - 2) Some(x._1)
+            else agr
+    }
 }
